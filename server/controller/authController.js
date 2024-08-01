@@ -129,11 +129,11 @@ const userdelete = async (req, res) => {
 const deleteDetails = async (req, res) => {
     try {
         const roomDetails = await userInfo.findByIdAndDelete(req.params.id)
-        const response = await user.updateOne({rooms:req.params.id}, {$pull:{rooms:req.params.id}}) 
+        const response = await user.updateOne({ rooms: req.params.id }, { $pull: { rooms: req.params.id } })
 
         console.log(response)
         return res.status(200).json({
-            "message":"Successfully deleted"
+            "message": "Successfully deleted"
         })
     } catch (error) {
         console.log(error.message)
@@ -142,18 +142,37 @@ const deleteDetails = async (req, res) => {
 }
 //update userDetails
 
-const updateDetails = async(req,res) =>{
+const updateDetails = async (req, res) => {
     try {
-        const {phone,address , college} = req.body
-        const room = await userInfo.findByIdAndUpdate({_id:req.params.id},{phone,address,college},{new:true})
+        const { phone, address, college } = req.body
+        const room = await userInfo.findByIdAndUpdate({ _id: req.params.id }, { phone, address, college }, { new: true })
 
         console.log(room)
         return res.status(200).json(room)
-        
+
     } catch (error) {
         console.log(error.message)
         return res.status(400).json({
-            "message":"Failed in Update"
+            "message": "Failed in Update"
+        })
+    }
+}
+
+//profile Update
+const profileUpdate = async (req, res) => {
+    try {
+        const { name, password } = req.body
+        const response = await user.findByIdAndUpdate({ _id: req.params.id }, { name, password }, { new: true })
+
+        console.log(response)
+        return res.status(200).json({
+            "message": response
+        })
+
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            "message": "Failed to update"
         })
     }
 }
@@ -164,5 +183,6 @@ module.exports = {
     AllDetails,
     userdelete,
     deleteDetails,
-    updateDetails
+    updateDetails,
+    profileUpdate
 }
