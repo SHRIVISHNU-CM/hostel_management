@@ -124,10 +124,27 @@ const userdelete = async (req, res) => {
         return res.status(400).json(error.message)
     }
 }
+
+//Delete userDetails
+const deleteDetails = async (req, res) => {
+    try {
+        const roomDetails = await userInfo.findByIdAndDelete(req.params.id)
+        const response = await user.updateOne({rooms:req.params.id}, {$pull:{rooms:req.params.id}}) 
+
+        console.log(response)
+        return res.status(200).json({
+            "message":"Successfully deleted"
+        })
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json(error.message)
+    }
+}
 module.exports = {
     signup,
     signin,
     userDetails,
     AllDetails,
-    userdelete
+    userdelete,
+    deleteDetails
 }
