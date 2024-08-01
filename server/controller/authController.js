@@ -140,11 +140,29 @@ const deleteDetails = async (req, res) => {
         return res.status(400).json(error.message)
     }
 }
+//update userDetails
+
+const updateDetails = async(req,res) =>{
+    try {
+        const {phone,address , college} = req.body
+        const room = await userInfo.findByIdAndUpdate({_id:req.params.id},{phone,address,college},{new:true})
+
+        console.log(room)
+        return res.status(200).json(room)
+        
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            "message":"Failed in Update"
+        })
+    }
+}
 module.exports = {
     signup,
     signin,
     userDetails,
     AllDetails,
     userdelete,
-    deleteDetails
+    deleteDetails,
+    updateDetails
 }
