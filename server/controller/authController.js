@@ -9,16 +9,23 @@ const signup = async (req, res) => {
             return res.status(400).json({
                 "message": "Enter your Name & Password"
             })
-        } else {
-            const result = await user.create({
-                name, password
-            })
-            console.log(result)
-            return res.status(200).json({
-                "message": result,
-                "user": "Successfully signedUp"
+        }
+        const OneUser = await user.findOne({ name: name })
+        if (OneUser) {
+            return res.status(400).json({
+                "message": "Please choose another name "
             })
         }
+        const result = await user.create({
+            name, password
+        })
+        console.log(result)
+        return res.status(200).json({
+            "message": result,
+            "user": "Successfully signedUp"
+        })
+
+
 
     } catch (error) {
         console.log(error)
@@ -35,19 +42,30 @@ const signin = async (req, res) => {
             return res.status(400).json({
                 "message": "Provide correct Username & Password"
             })
-        } else {
-            const result = await user.findOne({ name: name, password: password })
+        }
+        const result = await user.findOne({ name: name, password: password })
+
+        if (result) {
             console.log(result)
             return res.status(200).json({
                 "message": result,
                 "info": "Successfully login"
             })
+        } else {
+            return res.status(401).json({
+
+                "message": "Please check userName & Password"
+            })
         }
+
+
 
 
     } catch (e) {
         console.log(e)
-        return res.status(400).json(e.message)
+        return res.status(400).json({
+            "message": "User name & password Not Found"
+        })
     }
 }
 
@@ -94,13 +112,13 @@ const AllDetails = async (req, res) => {
 }
 
 //user delete
-const userdelete =async(req,res)=>{
+const userdelete = async (req, res) => {
     try {
-        const userID = req.params._id
+        const userID = req.params.id
         const response = await user.findByIdAndDelete(userID)
         console.log(response)
         return res.status(200).json(response)
-        
+
     } catch (error) {
         console.log(error)
         return res.status(400).json(error.message)
