@@ -1,6 +1,5 @@
 const admin = require("../models/admin")
 const adminDB = require("../models/adminDB")
-const upload = require("../multer")
 const cloudinary = require("cloudinary").v2
 const signup = async (req, res) => {
     try {
@@ -113,10 +112,46 @@ const AllRooms = async(req,res) => {
     }
 }
 
+//update 
+
+const UpdateRoom = async(req,res) =>{
+    try {
+        const updateInfo = req.body
+        const RoomsId = await adminDB.findById({_id:req.params.id})
+        const id = RoomsId.secure_url
+        
+        if(!RoomsId){
+            return res.status(400).json({
+                "message":"Enter Correct ID"
+            })
+        }
+        if(req.file){
+            if (id){
+                await cloudinary.uploader.destroy(id)
+            }
+        }
+        const PicUpload = await cloudinary.uploader.upload(req.file.path)
+        updateInfo.cloudinary_uri = PicUpload.secure_url
+        console.log(PicUpload.secure_url)
+        const updatedInfo = await adminDB.findByIdAndUpdate({_id:req.params.id},{$set:updateInfo},{new:true})
+        console.log(updatedInfo)
+        return res.status(200).json({
+            "message":updatedInfo
+        })
+
+        
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            "message":error.message
+        })
+    }
+}
 
  module.exports = {
     signup,
     signin,
     DbRooms,
     AllRooms,
+    UpdateRoom
 }
