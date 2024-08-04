@@ -9,6 +9,9 @@ const admin = new Schema({
     password: {
         type: String
     },
+    secret:{
+        type:String
+    },
     adminPic: [{
         type: "ObjectId",
         ref: "adminDB"
