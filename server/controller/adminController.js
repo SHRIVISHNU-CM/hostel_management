@@ -148,10 +148,30 @@ const UpdateRoom = async(req,res) =>{
     }
 }
 
+//delete roomsDB
+
+const DeleteRoomDB = async(req,res)=>{
+    try {
+        const RoomDB = await adminDB.findByIdAndDelete(req.params.id) 
+        const response = await admin.updateOne({adminPic:req.params.id},{$pull:{adminPic:req.params.id}})
+
+        console.log(response)
+        return res.status(200).json({
+            "message":response
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            "message":error.message
+        })
+    }
+}
+
  module.exports = {
     signup,
     signin,
     DbRooms,
     AllRooms,
-    UpdateRoom
+    UpdateRoom,
+    DeleteRoomDB
 }
