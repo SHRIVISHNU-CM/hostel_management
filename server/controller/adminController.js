@@ -1,5 +1,7 @@
 const admin = require("../models/admin")
-
+const adminDB = require("../models/adminDB")
+const upload = require("../multer")
+const cloudinary = require("cloudinary").v2
 const signup = async (req, res) => {
     try {
         const { name, password } = req.body
@@ -59,7 +61,62 @@ const signin = async (req, res) => {
     }
 }
 
-module.exports = {
+//post rooms
+const DbRooms = async (req,res) =>{
+    try {
+        
+        const roomsInfo = req.body
+        if(req.file){
+            const result = await cloudinary.uploader.upload(req.file.path)
+            roomsInfo.cloudinary_uri = result.secure_url
+        }
+        const newRoom = new adminDB(roomsInfo)
+        const response = await admin.findById(roomsInfo.main)
+
+        
+
+        if (!response) {
+            return res.status(400).json({
+                "message":"User not found"
+            })
+        }
+        const info = await newRoom.save()
+        console.log(info)
+
+        if (! response.adminPic){
+            admin.adminPic = []
+        }
+        response.adminPic.push(info._id)
+        await response.save()
+        return res.status(200).json(info)
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            "message":error.message
+        })
+    }
+}
+
+//all rooms
+
+
+const AllRooms = async(req,res) => {
+    try {
+        const response = await admin.find().populate("adminPic")
+        console.log(response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            "message":error.message
+        })
+    }
+}
+
+
+ module.exports = {
     signup,
-    signin
+    signin,
+    DbRooms,
+    AllRooms,
 }
