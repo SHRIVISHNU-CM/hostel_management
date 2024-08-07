@@ -5,6 +5,8 @@ const routes = require("./routes/userRoutes")
 const adminRoutes = require("./routes/adminRoutes")
 const DB = require('./models/connDB')
 const cloudinary = require("cloudinary").v2
+const cors = require("cors")
+
 DB()
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -16,6 +18,12 @@ const port = 3001
 
 
 app.use(express.json())
+app.use(cors(
+    {
+        origin:"http://localhost:5173/",
+        credentials:true
+    }
+))
 app.use("/api", routes)
 app.use("/admin", adminRoutes)
 app.listen(port, () => console.log(`Server is running at ${port}`))
