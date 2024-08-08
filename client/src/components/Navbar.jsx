@@ -13,16 +13,14 @@ function Navbar() {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-200 rounded-box z-10 mt-2 w-52 shadow"
+                            className="menu menu-lg dropdown-content bg-base-200 rounded-box z-10 mt-4 w-52 shadow"
                         >
-                            <li>About</li>
-                            <li>Contact Us</li>
+                            <Link to="/about" className="my-2">About</Link>
+                            <Link to="/contact" className="my-2">Contact Us</Link>
+                            <Link to="/register" className="my-2">Register</Link>
 
                         </ul>
-
                     </div>
-
-
                 </div>
                 <div className="navbar-start lg:navbar-center  ">
                     <div className="flex items-center btn hover:btn-ghost">
