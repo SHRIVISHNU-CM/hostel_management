@@ -1,6 +1,7 @@
 const admin = require("../models/admin")
 const adminDB = require("../models/adminDB")
 const cloudinary = require("cloudinary").v2
+const contact = require("../models/contact")
 const signup = async (req, res) => {
     try {
         const { name, password, secret } = req.body
@@ -174,11 +175,47 @@ const DeleteRoomDB = async (req, res) => {
     }
 }
 
+// contact us
+const contactus = async(req,res)=>{
+    try {
+        const {name,phone,email,college,hometown}= req.body
+        const response = await contact.create({
+            name,phone,email,college,hometown
+        })
+        console.log(response)
+        return res.status(200).json({
+            "message":response
+        })
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            "message" :error.message
+        })
+    }
+}
+//all contact
+const allContact = async(req,res) =>{
+    try {
+        const response = await contact.find()
+        console.log(response)
+        return res.status(200).json({
+            "message":response
+        })
+        
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            'message':error.message
+        })
+    }
+}
 module.exports = {
     signup,
     signin,
     DbRooms,
     AllRooms,
     UpdateRoom,
-    DeleteRoomDB
+    DeleteRoomDB,
+    contactus,
+    allContact
 }
