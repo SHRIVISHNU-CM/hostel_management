@@ -1,9 +1,10 @@
 import { CgProfile } from "react-icons/cg";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaNs8, FaPhoneAlt } from "react-icons/fa";
 import { FaUserGraduate } from "react-icons/fa6";
 import { useState } from "react";
+import axios from "axios";
 
 function Contact() {
     const [name, SetName] = useState("")
@@ -11,9 +12,29 @@ function Contact() {
     const [phone, SetPhone] = useState("")
     const [college, SetCollege] = useState("")
     const [location, SetLocation] = useState("")
+    const [ErrMsg,SetErrMsg]  = useState("")
 
     const HandleSubmit = (e) => {
         e.preventDefault()
+        axios.post("http://localhost:3001/admin/contactus",{
+            name:name,
+            email:email,
+            phone:phone,
+            college:college,
+            hometown:location
+        })
+        .then(()=>{
+            SetName("")
+            SetCollege("")
+            SetEmail("")
+            SetPhone("")
+            SetLocation("")
+        })
+        .catch((e)=>{
+            console.log("Try again ! request failed")
+
+            SetErrMsg("Please Try Again Request Failed!")
+        })
         
     }
     return (
@@ -62,7 +83,11 @@ function Contact() {
                     </label>
                     <button
                         type="submit"
-                        className="btn font-light btn-secondary">Submit</button>
+                        className="btn font-light btn-secondary">
+                        Submit
+                        </button>
+                    { ErrMsg && <h1 className="font-semibold text-xl text-warning">{ErrMsg}</h1>}
+                    
                 </form>
             </div>
 
