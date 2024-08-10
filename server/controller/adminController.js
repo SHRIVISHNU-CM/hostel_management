@@ -209,6 +209,21 @@ const allContact = async(req,res) =>{
         })
     }
 }
+const findOneRoom =async(req,res) => {
+    try {
+        const response = await adminDB.find({_id:req.params.id})
+        console.log(response)
+        return res.status(200).json({
+            "message":response
+        })
+        
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            message:error.message
+        })
+    }
+}
 module.exports = {
     signup,
     signin,
@@ -217,5 +232,6 @@ module.exports = {
     UpdateRoom,
     DeleteRoomDB,
     contactus,
-    allContact
+    allContact,
+    findOneRoom
 }
