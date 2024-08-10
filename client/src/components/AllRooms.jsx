@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { BsFillPeopleFill } from "react-icons/bs";
 import { RiCalendarCheckFill } from "react-icons/ri";
+import { Link } from "react-router-dom"
 function AllRooms() {
     const [room, SetRoom] = useState([])
     const [ErrMsg, SetErrMsg] = useState("")
@@ -23,22 +24,28 @@ function AllRooms() {
                     room.map((el, i) => {
                         return (
                             <div className="card bg-base-200 lg:w-[600px]  shadow-2xl" key={i}>
-                                <img
-                                    src={el.cloudinary_uri}
-                                    className="h-15"
-                                    alt="Rooms"
-                                />
+                                <figure className="p-2">
+                                    <img
+                                        src={el.cloudinary_uri}
+                                        className="h-15"
+                                        alt="Rooms"
+                                    />
+                                </figure>
+
                                 <div className="card-body">
                                     <h1 className="font-semibold">{ }</h1>
                                     <div className="card-actions justify-center">
                                         <h1 className="badge badge-outline">
-                                        <RiCalendarCheckFill title="available"/>
+                                            <RiCalendarCheckFill title="available" />
                                             {el.availability}
                                         </h1>
                                         <div className="badge badge-success" title="sharing">
                                             <BsFillPeopleFill />
                                             {el.sharing}
                                         </div>
+                                    </div>
+                                    <div className="">
+                                        <Link to={`/room/${el._id}`} className="btn btn-active">Check Out</Link>
                                     </div>
                                 </div>
                             </div>
