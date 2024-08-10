@@ -3,22 +3,29 @@ import { useEffect, useState } from "react"
 import { BsFillPeopleFill } from "react-icons/bs";
 import { RiCalendarCheckFill } from "react-icons/ri";
 import { Link } from "react-router-dom"
+import Loading from "./Loading";
 function AllRooms() {
     const [room, SetRoom] = useState([])
     const [ErrMsg, SetErrMsg] = useState("")
+    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        axios.get("http://localhost:3001/admin/allrooms")
-            .then((res) => {
-                console.log(res.data[0].adminPic)
-                SetRoom(res.data[0].adminPic)
-            })
-            .catch((e) => {
-                console.log(e.message)
-                SetErrMsg(e.message)
-            })
+        const timmer = setTimeout(() => {
+            setLoading(false)
+            axios.get("http://localhost:3001/admin/allrooms")
+                .then((res) => {
+                    console.log(res.data[0].adminPic)
+                    SetRoom(res.data[0].adminPic)
+                })
+                .catch((e) => {
+                    console.log(e.message)
+                    SetErrMsg(e.message)
+                })
+        }, 2000)
+        return ()=> clearTimeout(timmer)
     }, [])
     return (
-        <>
+        <>  
+            {isLoading ? <Loading/> : null}
             <div className="flex  flex-col gap-y-10 items-center">
                 {
                     room.map((el, i) => {
