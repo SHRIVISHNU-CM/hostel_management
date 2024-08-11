@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense,useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
@@ -13,15 +13,23 @@ import StudentUp from './components/signPage/StudentUp.jsx'
 import Home from './components/Home.jsx'
 import AllRooms from './components/AllRooms.jsx'
 import SingleRoom from './components/SingleRoom.jsx'
+import Loading from './components/Loading.jsx'
+
+import { userContext } from './Context/UserContext.jsx'
+import UserProfile from './components/dashboard/UserProfile.jsx'
 
 
+//lazy components
+
+const LazyAllRooms = React.lazy(() => import("./components/AllRooms.jsx"))
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path='/' element={<App />}>
-        <Route path='' element={<Home/>}/>
+        <Route path='' element={<Home />} />
         <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact />} />
+        <Route path='userprofile' element={<UserProfile/>}/>
         <Route path='register' element={<Register />} >
           <Route index element={<Navigate to="admin" replace />} />
           <Route path='admin' element={<Admin />} />
@@ -29,16 +37,42 @@ const router = createBrowserRouter(
           <Route path='AdminSignup' element={<AdminsignUp />} />
           <Route path='studentUp' element={<StudentUp />} />
         </Route>
-        <Route path='allrooms' element={<AllRooms/>}/>
-        <Route path='room/:id' element={<SingleRoom/>}/>
+        <Route path='allrooms' element={
+          <Suspense fallback={<Loading />}>
+            <LazyAllRooms />
+          </Suspense>
+        } />
+        <Route path='room/:id' element={<SingleRoom />} />
       </Route>
     </Route>
   )
 )
 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
-)
+
+function Root() {
+  const [userName,setUserName] = useState("")
+  const [userPassword,setUserPassword] = useState("")
+  const [isloggedIn, setIsloggedIn] = useState(false)
+
+  const login = (name,password) => {
+      setUserName(name)
+      setUserPassword(password)
+      setIsloggedIn(true)
+  }
+  const logut = () =>{
+      setUserName("")
+      setUserPassword("")
+      setIsloggedIn(false)
+  }
+
+  return (
+    <React.StrictMode>
+      <userContext.Provider value={{ userName, setUserName, userPassword, setUserPassword,login,logut,isloggedIn }}>
+        <RouterProvider router={router} />
+      </userContext.Provider>
+    </React.StrictMode>
+  )
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Root />)
