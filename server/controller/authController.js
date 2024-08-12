@@ -176,6 +176,22 @@ const profileUpdate = async (req, res) => {
         })
     }
 }
+//findOne user
+const OneUser = async(req,res) => {
+    try {
+        const id = req.params.id
+        const response = await user.findById({_id:id})
+        console.log(response)
+        return res.status(200).json({
+            "message":response
+        })
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            "message":error.message
+        })
+    }
+}
 module.exports = {
     signup,
     signin,
@@ -184,5 +200,6 @@ module.exports = {
     userdelete,
     deleteDetails,
     updateDetails,
-    profileUpdate
+    profileUpdate,
+    OneUser
 }
