@@ -19,14 +19,14 @@ function SingleRoom() {
           <img src={room.cloudinary_uri} />
         </figure>
         <div className='card-body'>
-
+          <h1 className='font-semibold text-xl'>Sharing:{room.sharing}</h1>
+          <h1 className='font-semibold text-xl'>Availability: {room.availability}</h1>
           <div>
             <button className='btn btn-active'>Book Now</button>
           </div>
         </div>
 
       </div>
-      <p>{room.sharing}</p>
     </>
   )
 }
