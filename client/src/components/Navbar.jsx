@@ -1,8 +1,12 @@
 import { FaBarsStaggered } from "react-icons/fa6";
 import { NavLink, Link } from "react-router-dom"
 import logo from "../assets/logo.png"
+import { useContext } from "react";
+import { userContext } from "../Context/UserContext";
+
 
 function Navbar() {
+    const {isloggedIn} = useContext(userContext)
     return (
         <>
             <div className="navbar bg-base-200 ">
@@ -17,8 +21,9 @@ function Navbar() {
                         >
                             <Link to="/about" className="my-2">About</Link>
                             <Link to="/contact" className="my-2">Contact Us</Link>
+                            {isloggedIn? <Link to="/userprofile" className="my-2">Profile</Link>:
                             <Link to="/register" className="my-2">Register</Link>
-
+                            }
                         </ul>
                     </div>
                 </div>
@@ -27,7 +32,6 @@ function Navbar() {
                         <img src={logo} className="w-[20px]" />
                         <Link to="/" className="font-semibold font-serif">kailasa</Link>
                     </div>
-
                 </div>
                 <div className="hidden lg:block lg:navbar-end">
                     <div className="flex justify-around">
@@ -35,8 +39,11 @@ function Navbar() {
                             className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>About</NavLink>
                         <NavLink to="/contact"
                             className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Contact Us</NavLink>
-                        <NavLink to="/register"
-                         className={({isActive})=> `${isActive? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"} `}>Rooms</NavLink>
+                        {isloggedIn ? <NavLink to="/userprofile"
+                            className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Profile</NavLink> :
+                            <NavLink to="/register"
+                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"} `}>Rooms</NavLink>
+                        }
                     </div>
 
                 </div>
