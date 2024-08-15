@@ -1,4 +1,4 @@
-import React, { Suspense,useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
         <Route path='' element={<Home />} />
         <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact />} />
-        <Route path='userprofile' element={<UserProfile/>}/>
+        <Route path='userprofile' element={<UserProfile />} />
         <Route path='register' element={<Register />} >
           <Route index element={<Navigate to="admin" replace />} />
           <Route path='admin' element={<Admin />} />
@@ -51,24 +51,27 @@ const router = createBrowserRouter(
 
 
 function Root() {
-  const [userName,setUserName] = useState("")
-  const [userPassword,setUserPassword] = useState("")
+  const [userName, setUserName] = useState("")
+  const [userPassword, setUserPassword] = useState("")
+  const [userID, SetuserID] = useState('')
   const [isloggedIn, setIsloggedIn] = useState(false)
 
-  const login = (name,password) => {
-      setUserName(name)
-      setUserPassword(password)
-      setIsloggedIn(true)
+  const login = (name, password) => {
+    setUserName(name)
+    setUserPassword(password)
+    setIsloggedIn(true)
   }
-  const logut = () =>{
-      setUserName("")
-      setUserPassword("")
-      setIsloggedIn(false)
+  const logut = () => {
+    setUserName("")
+    setUserPassword("")
+    setIsloggedIn(false)
   }
 
   return (
     <React.StrictMode>
-      <userContext.Provider value={{ userName, setUserName, userPassword, setUserPassword,login,logut,isloggedIn }}>
+      <userContext.Provider value={{
+        userName, setUserName, userPassword, setUserPassword, login, logut, isloggedIn,userID , SetuserID
+      }}>
         <RouterProvider router={router} />
       </userContext.Provider>
     </React.StrictMode>
