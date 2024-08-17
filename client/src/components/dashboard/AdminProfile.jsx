@@ -3,7 +3,10 @@ import axios from "axios"
 import { userContext } from '../../Context/UserContext'
 function AdminProfile() {
   const { AdminID } = useContext(userContext)
-  const [data, SetData] = useState("")
+  const [data, SetData] = useState({
+    name:"",
+    password:""
+  })
   const GetAPI = `http://localhost:3001/admin/admin/${AdminID}`
   useEffect(() => {
     axios.get(GetAPI)
