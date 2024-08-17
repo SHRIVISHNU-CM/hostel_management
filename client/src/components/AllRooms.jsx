@@ -5,7 +5,7 @@ import { RiCalendarCheckFill } from "react-icons/ri";
 import { Link } from "react-router-dom"
 import Loading from "./Loading";
 function AllRooms() {
-    const [room, SetRoom] = useState([])
+    const [allRoom,SetRooms] = useState([])
     const [ErrMsg, SetErrMsg] = useState("")
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
@@ -13,8 +13,9 @@ function AllRooms() {
             setLoading(false)
             axios.get("http://localhost:3001/admin/allrooms")
                 .then((res) => {
-                    console.log(res.data[0].adminPic)
-                    SetRoom(res.data[0].adminPic)
+                    console.log(res.data)
+                    const allAdminPics = res.data.flatMap(room => room.adminPic)
+                    SetRooms(allAdminPics)
                 })
                 .catch((e) => {
                     console.log(e.message)
@@ -26,9 +27,10 @@ function AllRooms() {
     return (
         <>  
             {isLoading ? <Loading/> : null}
+            
             <div className="flex  flex-col gap-y-10 items-center">
                 {
-                    room.map((el, i) => {
+                    allRoom.map((el, i) => {
                         return (
                             <div className="card bg-base-200 lg:w-[600px]  shadow-2xl" key={i}>
                                 <figure className="p-2">
