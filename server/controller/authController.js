@@ -3,9 +3,9 @@ const userInfo = require('../models/userTwo')
 
 //sign up controller
 const signup = async (req, res) => {
-    const { name, password } = req.body
+    const { name, password, phone, address, college } = req.body
     try {
-        if (!name || !password) {
+        if (!name || !password || !phone || !address || !college) {
             return res.status(400).json({
                 "message": "Enter your Name & Password"
             })
@@ -17,16 +17,13 @@ const signup = async (req, res) => {
             })
         }
         const result = await user.create({
-            name, password
+            name, password, phone, address, college
         })
         console.log(result)
         return res.status(200).json({
             "message": result,
             "user": "Successfully signedUp"
         })
-
-
-
     } catch (error) {
         console.log(error)
         return res.status(400).json(error)
@@ -57,10 +54,6 @@ const signin = async (req, res) => {
                 "message": "Please check userName & Password"
             })
         }
-
-
-
-
     } catch (e) {
         console.log(e)
         return res.status(400).json({
@@ -76,11 +69,17 @@ const userDetails = async (req, res) => {
         const newInfo = new userInfo(postInfo)
         const userData = await user.findById(postInfo.main)
 
+
         if (!userData) {
             return res.status(400).json({
                 "message": "User Not Found"
             })
         }
+        const CheckRoom = await userInfo.findOne({room_id:req.body.room_id})
+        if (CheckRoom) {
+            return res.status(400).json("Already Registered. Thank You!")
+        }
+        
 
         const info = await newInfo.save()
 
@@ -129,6 +128,11 @@ const userdelete = async (req, res) => {
 const deleteDetails = async (req, res) => {
     try {
         const roomDetails = await userInfo.findByIdAndDelete(req.params.id)
+        if (!roomDetails) {
+            return res.status(404).json({
+                "message": "room noot found"
+            })
+        }
         const response = await user.updateOne({ rooms: req.params.id }, { $pull: { rooms: req.params.id } })
 
         console.log(response)
@@ -177,18 +181,20 @@ const profileUpdate = async (req, res) => {
     }
 }
 //findOne user
-const OneUser = async(req,res) => {
+const OneUser = async (req, res) => {
     try {
         const id = req.params.id
-        const response = await user.findById({_id:id})
+        const response = await user.findById({ _id: id }).populate("rooms")
+
         console.log(response)
+
         return res.status(200).json({
-            "message":response
+            "message": response
         })
     } catch (error) {
         console.log(error.message)
         return res.status(400).json({
-            "message":error.message
+            "message": error.message
         })
     }
 }
