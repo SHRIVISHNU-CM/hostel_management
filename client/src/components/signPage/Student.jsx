@@ -7,7 +7,7 @@ import { userContext } from "../../Context/UserContext";
 
 function Student() {
     const navigate = useNavigate()
-    const { login , SetuserID} = useContext(userContext)
+    const { login , SetuserID, Account} = useContext(userContext)
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const HandleSubmit = (e) => {
@@ -21,6 +21,7 @@ function Student() {
                 login(name, password)
                 SetuserID(res.data.message._id)
                 navigate('/allrooms')
+                Account()
             })
             .catch(e => console.log(e))
     }
