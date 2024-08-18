@@ -10,6 +10,12 @@ const signup = async (req, res) => {
                 "message": "Please provide proper name, password, and Secret"
             })
         }
+        const AdminName = await admin.findOne({ name: name })
+        if (AdminName) {
+            return res.status(404).json({
+                "message": "Choose Another Name"
+            })
+        }
         if (secret === "hi") {
             const username = await admin.findOne({ name: name })
 
@@ -26,9 +32,9 @@ const signup = async (req, res) => {
                 "message": "Successfully admin created"
             })
 
-        }else{
+        } else {
             return res.status(401).json({
-                "message":"Admin Unauthorized"
+                "message": "Admin Unauthorized"
             })
         }
 
@@ -42,19 +48,20 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     try {
-        const { name, password } = req.body
-        if (!name || !password) {
+        const { name, password, secret } = req.body
+        if (!name || !password || !secret) {
             return res.status(401).json({
                 "message": "Check username & password"
             })
         }
-        const response = await admin.findOne({
-            name: name
-        })
+        const response = await admin.findOne({ name: name })
         if (response) {
             return res.status(200).json({
-                "message": "successfully login "
+                "message": "successfully login ",
+                "data": response
             })
+
+
         } else {
             return res.status(400).json({
                 "message": "check username and password "
@@ -176,53 +183,87 @@ const DeleteRoomDB = async (req, res) => {
 }
 
 // contact us
-const contactus = async(req,res)=>{
+const contactus = async (req, res) => {
     try {
-        const {name,phone,email,college,hometown}= req.body
+        const { name, phone, email, college, hometown } = req.body
         const response = await contact.create({
-            name,phone,email,college,hometown
+            name, phone, email, college, hometown
         })
         console.log(response)
         return res.status(200).json({
-            "message":response
+            "message": response
         })
     } catch (error) {
         console.log(error.message)
         return res.status(400).json({
-            "message" :error.message
+            "message": error.message
         })
     }
 }
 //all contact
-const allContact = async(req,res) =>{
+const allContact = async (req, res) => {
     try {
         const response = await contact.find()
         console.log(response)
         return res.status(200).json({
-            "message":response
+            "message": response
         })
-        
+
     } catch (error) {
         console.log(error.message)
         return res.status(400).json({
-            'message':error.message
+            'message': error.message
         })
     }
 }
-const findOneRoom =async(req,res) => {
+//One Room 
+const findOneRoom = async (req, res) => {
     try {
-        const response = await adminDB.find({_id:req.params.id})
+        const response = await adminDB.find({ _id: req.params.id })
         console.log(response)
         return res.status(200).json({
-            "message":response
+            "message": response
         })
-        
+
     } catch (error) {
         console.log(error.message)
         return res.status(400).json({
-            message:error.message
+            message: error.message
         })
     }
+}
+//find One Admin
+const findAdmin = async (req, res) => {
+    try {
+        const response = await admin.findById(req.params.id)
+        if (!response){
+            return res.status(400).json({
+                "message": "not found"
+            })
+        }
+        
+        console.log(response)
+        return res.status(200).json({
+            "message": response
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            "message": error
+        })
+    }
+}
+//update admin
+const adminUpdate = async(req,res) =>{
+    const id = req.params.id
+    const {name,password} = req.body
+    const response =await admin.findByIdAndUpdate({_id:id},{name,password},{new:true})
+
+    console.log(response)
+    return res.status(200).json({
+        "message":response
+    })
 }
 module.exports = {
     signup,
@@ -233,5 +274,7 @@ module.exports = {
     DeleteRoomDB,
     contactus,
     allContact,
-    findOneRoom
+    findOneRoom,
+    findAdmin,
+    adminUpdate
 }
