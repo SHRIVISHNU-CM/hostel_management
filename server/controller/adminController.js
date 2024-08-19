@@ -128,7 +128,6 @@ const AllRooms = async (req, res) => {
 }
 
 //update 
-
 const UpdateRoom = async (req, res) => {
     try {
         const updateInfo = req.body
@@ -265,6 +264,25 @@ const adminUpdate = async(req,res) =>{
         "message":response
     })
 }
+//admin drop
+
+const admindrop = async (req , res) => {
+    try {
+        const id = req.params.id
+        const response = await admin.findByIdAndDelete(id)
+        console.log(response)
+
+        return res.status(200).json({
+            "message":"successfully deleted"
+        })
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            "message":error
+        })
+    }
+}
 module.exports = {
     signup,
     signin,
@@ -276,5 +294,6 @@ module.exports = {
     allContact,
     findOneRoom,
     findAdmin,
-    adminUpdate
+    adminUpdate,
+    admindrop
 }
