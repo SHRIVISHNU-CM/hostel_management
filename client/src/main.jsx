@@ -22,6 +22,7 @@ import UserProfile from './components/dashboard/UserProfile.jsx'
 import AddPost from './components/dashboard/AddPost.jsx'
 import AdminProfile from './components/dashboard/AdminProfile.jsx'
 import AdminUpdate from './components/dashboard/AdminUpdate.jsx'
+import UserDetails from './components/dashboard/UserDetails.jsx'
 
 
 //lazy components
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
         <Route path='addPost' element={<AddPost/>}/>
         <Route path='adminupdate/:id' element={<AdminUpdate/>}/>
         <Route path='userRegister' element={<UserRegister/>}/>
+        <Route path='userdetails/:id' element={<UserDetails/>}/>
         <Route path='register' element={<Register />} >
           <Route index element={<Navigate to="admin" replace />} />
           <Route path='admin' element={<Admin />} />
