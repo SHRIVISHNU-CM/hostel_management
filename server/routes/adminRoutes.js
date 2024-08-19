@@ -1,4 +1,4 @@
-const {signup,signin,DbRooms,AllRooms,UpdateRoom,DeleteRoomDB,contactus,allContact,findOneRoom,findAdmin,adminUpdate} = require('../controller/adminController')
+const {signup,signin,DbRooms,AllRooms,UpdateRoom,DeleteRoomDB,contactus,allContact,findOneRoom,findAdmin,adminUpdate,admindrop} = require('../controller/adminController')
 const express = require("express")
 const router = express.Router()
 const multer = require("../multer")
@@ -12,6 +12,7 @@ router.get("/admin/:id",findAdmin)
 router.put("/adminupdate/:id",adminUpdate)
 router.put('/roomsUpdate/:id',multer.single("image"),UpdateRoom)
 router.delete("/deleteDB/:id",DeleteRoomDB)
+router.delete("/admindelete/:id",admindrop)
 router.post("/contactus",contactus)
 router.get("/allContactus",allContact)
 
