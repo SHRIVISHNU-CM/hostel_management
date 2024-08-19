@@ -125,7 +125,6 @@ function UserProfile() {
                 </div>
 
                 <div className='card-actions justify-end'>
-                  
                   <Link to={`/room/${el._id}`}>
                     <FaArrowCircleRight
                       className=' text-2xl text-purple-700 hover:text-purple-400'
