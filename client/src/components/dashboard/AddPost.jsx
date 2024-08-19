@@ -3,6 +3,9 @@ import { RiCalendarCheckFill } from "react-icons/ri";
 import { AiFillPicture } from "react-icons/ai";
 import { useContext, useState } from "react";
 import { userContext } from "../../Context/UserContext";
+import { HiCurrencyRupee } from "react-icons/hi";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 import axios from "axios";
 
 function AddPost() {
@@ -10,7 +13,10 @@ function AddPost() {
     const [formData, SetFormData] = useState({
         sharing: "",
         availability: "",
-        image: ""
+        amount: "",
+        location: "",
+        country: ""
+
     })
     const [file, Setfile] = useState(null)
     const handleInput = (e) => {
@@ -29,7 +35,9 @@ function AddPost() {
         data.append("main", AdminID)
         data.append("sharing", formData.sharing)
         data.append("availability", formData.availability)
-        data.append("image", formData.image)
+        data.append("amount", formData.amount)
+        data.append("location", formData.location)
+        data.append("country", formData.country)
 
         if (file) {
             data.append("image", file)
@@ -67,13 +75,33 @@ function AddPost() {
                                     type="text" placeholder="Enter Availability Yes or No" />
                             </label>
                             <label className="input input-bordered flex items-center gap-x-2 my-2">
-                                <AiFillPicture className="text-gray-500" />
+                                <FaMapLocationDot className="text-gray-500" />
                                 <input
-                                    name="image"
-                                    value={formData.image}
+                                    name="location"
+                                    value={formData.location}
                                     onChange={handleInput}
                                     type="text"
-                                    placeholder="Enter Name of Picture" />
+                                    placeholder="location" />
+                            </label>
+                            <label className="input input-bordered flex items-center gap-x-2 my-2">
+                                <FaLocationCrosshairs className="text-gray-500"/>
+                                <input
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleInput}
+                                    type="text"
+                                    placeholder="Enter country"
+                                />
+                            </label>
+                            <label className="input input-bordered flex items-center gap-x-2 my-2">
+                                <HiCurrencyRupee className="text-gray-500" />
+                                <input
+                                    name="amount"
+                                    value={formData.amount}
+                                    onChange={handleInput}
+                                    type="number"
+                                    placeholder="Price of Room"
+                                />
                             </label>
                             <h1>
                                 <span className="font-bold text-warning">Note:</span>
