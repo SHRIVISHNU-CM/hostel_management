@@ -12,6 +12,15 @@ const adminDatabase = new Schema({
     availability: {
         type: String
     },
+    amount:{
+        type:Number
+    },
+    location:{
+        type:String
+    },
+    country:{
+        type:String
+    },
     main: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "admin"
