@@ -148,8 +148,8 @@ const deleteDetails = async (req, res) => {
 
 const updateDetails = async (req, res) => {
     try {
-        const { phone, address, college } = req.body
-        const room = await userInfo.findByIdAndUpdate({ _id: req.params.id }, { phone, address, college }, { new: true })
+        const {alloted } = req.body
+        const room = await userInfo.findByIdAndUpdate({ _id: req.params.id }, { alloted }, { new: true })
 
         console.log(room)
         return res.status(200).json(room)
