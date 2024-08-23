@@ -10,7 +10,13 @@ const userDetails = new Schema({
     },
     room_id:{
         type:String
+    },
+    alloted:{
+        type:String,
+        default:'Not Alloted',
+        enum:["Not Alloted","Alloted"]
     }
+
 })
 module.exports = mongoose.model("userDetails",userDetails)
 
