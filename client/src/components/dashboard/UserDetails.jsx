@@ -75,7 +75,7 @@ function UserDetails() {
                                         <h1 className="my-2">Sharing: {roomDetails.sharing}</h1>
                                         <h1 className="my-2">Availability : {roomDetails.availability}</h1>
                                         <h1 className="my-2">Price:{roomDetails.amount}/month</h1>
-                                        <h1 className="my-2">Alloted:{ele.alloted}</h1>
+                                        <h1 className="my-2">Alloted:</h1>
                                         <form onSubmit={e=>handleUpdate(e,ele._id)}>
                                             <label className="input input-bordered py-2 input-ghost ">
                                                 <input
