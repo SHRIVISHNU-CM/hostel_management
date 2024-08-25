@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { FaUser } from "react-icons/fa6";
 import { MdPassword } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../../Context/UserContext";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ function Admin() {
     const [password, setPassword] = useState("")
     const [secret, SetSecret] = useState("")
     const [name, setName] = useState("")
+    const navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault()
         try {
@@ -24,6 +25,7 @@ function Admin() {
                     AdminIsLoggin(name)
                     Account()
                     SetAdminID(res.data.data._id)
+                    navigate('/adminprofile')
                 })
                 .catch((e) => {
                     console.log(e)

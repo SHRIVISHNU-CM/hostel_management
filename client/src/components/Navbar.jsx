@@ -68,7 +68,7 @@ function Navbar() {
                         {acc ?
                             null :
                             <NavLink to="/register"
-                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"} `}>Rooms</NavLink>
+                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"} `}>Signin/Signup</NavLink>
 
                         }
                         {isloggedIn ? <NavLink to="/userprofile"
