@@ -4,7 +4,7 @@ import logo from "../assets/logo.png"
 function Home() {
     return (
         <>
-            <head className="flex justify-around">
+            <head className="flex flex-col items-center lg:flex lg:flex-row lg:justify-around">
                 <div>
                     <img src={room1} className="p-2 w-[400px] rounded-xl" />
                     <Link to="/allrooms" className="btn btn-success relative bottom-6 left-3">check out</Link>
@@ -33,7 +33,36 @@ function Home() {
                     </div>
                 </div>
             </main>
-
+            <main className="flex flex-col items-center">
+                <h1 className="font-semibold text-blue-700 text-2xl text-center">Frequently Asked Question</h1>
+                <div className="collapse collapse-arrow bg-base-200 my-2  w-96 lg:w-[500px]">
+                    <input type="radio" name="q-1" defaultChecked/>
+                    <div className="collapse-title text-xl font-semibold">
+                        Is this Trust worthy?
+                    </div>
+                    <div className="collapse-content">
+                        <p>Yes,absolutly we can Trust</p>
+                    </div>
+                </div>
+                <div className="collapse collapse-arrow bg-base-200 my-2 w-96 lg:w-[500px]">
+                    <input type="radio" name="q-1" defaultChecked/>
+                    <div className="collapse-title text-xl font-semibold">
+                    Is this limited to only for students?
+                    </div>
+                    <div className="collapse-content">
+                        <p>100% yes. This is only for students who are studying</p>
+                    </div>
+                </div>
+                <div className="collapse collapse-arrow bg-base-200 my-2 w-96 lg:w-[500px]">
+                    <input type="radio" name="q-1" defaultChecked/>
+                    <div className="collapse-title text-xl font-semibold">
+                        Is there Refund Policy
+                    </div>
+                    <div className="collapse-content">
+                        <p>According our Company policy there is no Refund amount</p>
+                    </div>
+                </div>
+            </main>
 
             <footer className="footer footer-center bg-base-300  text-base-content p-4">
                 <div className="flex gap-3">
