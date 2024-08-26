@@ -75,6 +75,7 @@ function Root() {
   const [acc,setacc]  = useState(false)
 
 
+
   const login = (name, password) => {
     setUserName(name)
     setUserPassword(password)
@@ -84,6 +85,7 @@ function Root() {
     setUserName("")
     setUserPassword("")
     setIsloggedIn(false)
+    setacc(false)
   }
   const AdminIsLoggin = (name) =>{
     SetAdminLogin(true)
@@ -91,6 +93,7 @@ function Root() {
   }
   const AdminIsLogout  = () => {
     SetAdminLogin(false)
+    setacc(false)
     SetAdminName("")
   }
   const Account = () => {

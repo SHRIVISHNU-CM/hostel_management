@@ -40,31 +40,37 @@ function Navbar() {
                 <div className="hidden lg:block lg:navbar-end">
                     <div className="flex justify-around">
                         {AdminLogin ?
-                            <NavLink to="/adminContact"
-                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}
-                            >All contact</NavLink> :
-                            <NavLink to='/about'
-                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>About</NavLink>
-                        }
-                        {AdminLogin ?
-                            <NavLink to="/addPost"
-                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Add Post</NavLink> :
-                            <NavLink to="/contact"
-                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Contact Us</NavLink>
+                            (
+                                <>
+                                    <NavLink to="/adminContact"
+                                        className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}
+                                    >All contact</NavLink>
+                                    <NavLink to="/addPost"
+                                        className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Add Post</NavLink>
+                                    <NavLink to="/adminprofile"
+                                        className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Admin Profile</NavLink>
+                                    <NavLink to="/userRegister"
+                                        className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}
+                                    >User</NavLink>
+
+
+
+                                </>
+                            )
+
+                            : (
+                                <>
+                                    <NavLink to='/about'
+                                        className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>About</NavLink>
+                                    <NavLink to="/contact"
+                                        className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Contact Us</NavLink>
+                                   
+                                </>
+                            )
+
+
                         }
 
-                        {AdminLogin ?
-                            <NavLink to="/adminprofile"
-                                className={({ isActive }) => `${isActive ? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}>Admin Profile</NavLink>:
-                                null
-                            
-                        }
-                        {AdminLogin?
-                            <NavLink to="/userRegister"
-                            className={({isActive})=>`${isActive? "font-semibold btn btn-success" : "font-semibold btn btn-ghost"}`}
-                            >User</NavLink>:null
-
-                        }
                         {acc ?
                             null :
                             <NavLink to="/register"

@@ -3,10 +3,14 @@ import axios from "axios"
 import { userContext } from '../../Context/UserContext'
 import AdminRooms from './AdminRooms'
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import { Link } from 'react-router-dom';
+import { BiSolidLogOut } from "react-icons/bi";
+
+
 
 
 function AdminProfile() {
-  const { AdminID } = useContext(userContext)
+  const { AdminID, AdminIsLogout, Account,logut } = useContext(userContext)
   const [details, SetDetails] = useState([])
   const [data, SetData] = useState({
     name: "",
@@ -43,11 +47,15 @@ function AdminProfile() {
   const handleDrop = () => {
     try {
       axios.delete(`http://localhost:3001/admin/admindelete/${AdminID}`)
-      .then(res=>console.log(res))
-      
+        .then(res => console.log(res))
+
     } catch (error) {
       console.log(error)
     }
+  }
+  const HandleLogout = () => {
+    AdminIsLogout()
+    logut()
   }
   return (
     <>
@@ -82,6 +90,12 @@ function AdminProfile() {
                   title='Close this account'
                   onClick={handleDrop}
                   className=' text-red-700 text-2xl hover:text-red-400' />
+                <Link to={'/register'}>
+                  <BiSolidLogOut
+                    className=' text-green-700 text-2xl hover:text-green-400'
+                    onClick={HandleLogout}
+                  />
+                </Link>
               </div>
             </div>
           </div>

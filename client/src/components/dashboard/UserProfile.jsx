@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { FaArrowCircleRight } from "react-icons/fa";
 
 function UserProfile() {
-  const { userID } = useContext(userContext)
+  const { userID , logut} = useContext(userContext)
   const [info, setInfo] = useState("")
   const [meg, SetMeg] = useState("")
   const [room, setRoom] = useState([])
@@ -41,6 +41,7 @@ function UserProfile() {
 
   const handleLogout = () => {
     navigate('/register')
+    logut()
   }
 
   const ShowDetails = async () => {
