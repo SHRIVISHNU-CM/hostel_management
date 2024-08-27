@@ -36,7 +36,7 @@ function AllRooms() {
                                 <figure className="p-2">
                                     <img
                                         src={el.cloudinary_uri}
-                                        className="h-15"
+                                        className="w-[200px]"
                                         alt="Rooms"
                                     />
                                 </figure>
