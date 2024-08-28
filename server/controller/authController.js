@@ -1,5 +1,6 @@
 const user = require('../models/user')
 const userInfo = require('../models/userTwo')
+const bcrypt = require("bcrypt")
 
 //sign up controller
 const signup = async (req, res) => {
@@ -40,13 +41,22 @@ const signin = async (req, res) => {
                 "message": "Provide correct Username & Password"
             })
         }
-        const result = await user.findOne({ name: name, password: password })
+        const result = await user.findOne({ name: name}).select("+password")
 
-        if (result) {
+        if (result && (await bcrypt.compare(password,result.password))) {
+            
             console.log(result)
-            return res.status(200).json({
+            const token = result.jwtToken()
+            result.password = undefined
+            const cookieOptions = {
+                maxAge : 1*60*60*1000,
+                httpOnly:true
+            }
+            
+            return res.cookie('token',token,cookieOptions).status(200).json({
                 "message": result,
-                "info": "Successfully login"
+                "info": "Successfully login",
+                "token":token
             })
         } else {
             return res.status(401).json({
