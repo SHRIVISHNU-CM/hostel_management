@@ -46,7 +46,7 @@ function UserDetails() {
         e.preventDefault()
         const newVal = allot[roomID] !== undefined ? allot[roomID] : ""
         try {
-            const response = await axios.put(`http://localhost:3001/api/user/details/${roomID}`, {alloted: newVal})
+            const response = await axios.put(`http://localhost:3001/api/user/details/${roomID}`, {alloted: newVal},{withCredentials:true})
             console.log(response)
     
             setData(prev => prev.map(room => 

@@ -55,10 +55,18 @@ const signin = async (req, res) => {
             })
         }
         const response = await admin.findOne({ name: name })
+
         if (response) {
-            return res.status(200).json({
+            const token = response.JWTAdmin()
+            response.password = undefined
+            const cookieOptions = {
+                maxAge: 1 * 60 * 60 * 1000,
+                httpOnly: true
+            }
+            return res.cookie('token', token, cookieOptions).status(200).json({
                 "message": "successfully login ",
-                "data": response
+                "data": response,
+                "token": token
             })
 
 
@@ -74,7 +82,24 @@ const signin = async (req, res) => {
         })
     }
 }
-
+//logout
+const adminLogout = async(req,res) => {
+    try {
+        const cookieOptions ={
+            expires: new Date(),
+            httpOnly : true
+        }
+        return res.status(200).cookie('token',null,cookieOptions).json({
+            "message":"Successfully Logout"
+        })
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            "message":error
+        })
+    }
+}
 //post rooms
 const DbRooms = async (req, res) => {
     try {
@@ -235,12 +260,12 @@ const findOneRoom = async (req, res) => {
 const findAdmin = async (req, res) => {
     try {
         const response = await admin.findById(req.params.id)
-        if (!response){
+        if (!response) {
             return res.status(400).json({
                 "message": "not found"
             })
         }
-        
+
         console.log(response)
         return res.status(200).json({
             "message": response
@@ -254,32 +279,32 @@ const findAdmin = async (req, res) => {
     }
 }
 //update admin
-const adminUpdate = async(req,res) =>{
+const adminUpdate = async (req, res) => {
     const id = req.params.id
-    const {name,password} = req.body
-    const response =await admin.findByIdAndUpdate({_id:id},{name,password},{new:true})
+    const { name, password } = req.body
+    const response = await admin.findByIdAndUpdate({ _id: id }, { name, password }, { new: true })
 
     console.log(response)
     return res.status(200).json({
-        "message":response
+        "message": response
     })
 }
 //admin drop
 
-const admindrop = async (req , res) => {
+const admindrop = async (req, res) => {
     try {
         const id = req.params.id
         const response = await admin.findByIdAndDelete(id)
         console.log(response)
 
         return res.status(200).json({
-            "message":"successfully deleted"
+            "message": "successfully deleted"
         })
-        
+
     } catch (error) {
         console.log(error)
         return res.status(400).json({
-            "message":error
+            "message": error
         })
     }
 }
@@ -295,5 +320,6 @@ module.exports = {
     findOneRoom,
     findAdmin,
     adminUpdate,
-    admindrop
+    admindrop,
+    adminLogout
 }

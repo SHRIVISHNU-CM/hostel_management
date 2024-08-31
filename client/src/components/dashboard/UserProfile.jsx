@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { FaArrowCircleRight } from "react-icons/fa";
 
 function UserProfile() {
-  const { userID , logut} = useContext(userContext)
+  const { userID, logut } = useContext(userContext)
   const [info, setInfo] = useState("")
   const [meg, SetMeg] = useState("")
   const [room, setRoom] = useState([])
@@ -40,8 +40,13 @@ function UserProfile() {
   }
 
   const handleLogout = () => {
-    navigate('/register')
-    logut()
+    axios.get('http://localhost:3001/api/logout',{withCredentials:true})
+      .then((res) => {
+        console.log(res)
+        navigate('/register')
+        logut()
+      })
+
   }
 
   const ShowDetails = async () => {
@@ -82,9 +87,9 @@ function UserProfile() {
           <div className='card-body'>
             <h1 className='font-semibold text-xl text-orange-600'>User Information</h1>
             <h1 className='card-title'>{info.name}</h1>
-            <h1>
+            {/* <h1>
               <span className='font-light text-lg text-slate-600'>Password:</span>{info.password}
-            </h1>
+            </h1> */}
             <h1>
               <span className='font-light text-lg text-slate-600'>Type:</span>{info.UserType}
             </h1>

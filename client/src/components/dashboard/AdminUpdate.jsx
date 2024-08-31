@@ -18,7 +18,7 @@ function AdminUpdate() {
     })
     const [file, Setfile] = useState(null)
     useEffect(() => {
-        axios.get(`http://localhost:3001/admin/room/${id}`)
+        axios.get(`http://localhost:3001/admin/room/${id}`,{withCredentials:true})
             .then((res) => {
                 console.log(res.data.message[0])
                 SetValues({
@@ -50,7 +50,7 @@ function AdminUpdate() {
             if (file) {
                 formData.append("image", file)
             }
-            const res = await axios.put(`http://localhost:3001/admin/roomsUpdate/${id}`, formData)
+            const res = await axios.put(`http://localhost:3001/admin/roomsUpdate/${id}`,{withCredentials:true}, formData)
             console.log(res)
         } catch (error) {
             console.log(error)

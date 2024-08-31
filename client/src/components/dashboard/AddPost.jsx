@@ -43,7 +43,7 @@ function AddPost() {
             data.append("image", file)
         }
         try {
-            const response = await axios.post("http://localhost:3001/admin/rooms", data)
+            const response = await axios.post("http://localhost:3001/admin/rooms", data,{withCredentials:true})
             console.log(response)
         } catch (error) {
             console.log(error)
