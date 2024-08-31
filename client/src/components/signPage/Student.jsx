@@ -4,18 +4,21 @@ import { MdPassword } from "react-icons/md";
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../../Context/UserContext";
+import Loading from "../Loading";
 
 function Student() {
     const navigate = useNavigate()
     const { login , SetuserID, Account} = useContext(userContext)
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
+    const [loading,SetLoading] = useState(false)
     const HandleSubmit = (e) => {
         e.preventDefault();
+        SetLoading(true)
         axios.post("http://localhost:3001/api/signin", {
             name: name.trim(),
             password: password.trim()
-        })
+        },{withCredentials:true})
             .then((res) => {
                 console.log(res)
                 login(name, password)
@@ -24,6 +27,11 @@ function Student() {
                 Account()
             })
             .catch(e => console.log(e))
+    }
+    if (loading){
+        return(
+            <><Loading/></>
+        )
     }
     //userSignin
     return (
