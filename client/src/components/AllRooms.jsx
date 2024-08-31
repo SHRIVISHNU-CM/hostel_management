@@ -11,7 +11,7 @@ function AllRooms() {
     useEffect(() => {
         const timmer = setTimeout(() => {
             setLoading(false)
-            axios.get("http://localhost:3001/admin/allrooms")
+            axios.get("http://localhost:3001/admin/allrooms",{withCredentials:true})
                 .then((res) => {
                     console.log(res.data)
                     const allAdminPics = res.data.flatMap(room => room.adminPic)
