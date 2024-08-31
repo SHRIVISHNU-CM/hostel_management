@@ -32,9 +32,9 @@ function SingleRoom() {
   }
   return (
     <>
-      <div className='card w-[600px] bg-base-200 shadow-xl'>
+      <div className='card w-[600px] bg-base-200 shadow-xl my-4 mx-4'>
         <figure className='p-2'>
-          <img src={room.cloudinary_uri} />
+          <img className='w-[200px]' src={room.cloudinary_uri} />
         </figure>
         <div className='card-body'>
           <h1 className='font-semibold text-xl'>Sharing:{room.sharing}</h1>
