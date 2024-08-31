@@ -4,6 +4,7 @@ import { MdPassword } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../../Context/UserContext";
+import Loading from "../Skeleton"
 import axios from "axios";
 
 function Admin() {
@@ -12,14 +13,16 @@ function Admin() {
     const [secret, SetSecret] = useState("")
     const [name, setName] = useState("")
     const navigate = useNavigate()
+    const [loading, SetLoading] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault()
         try {
+            SetLoading(true)
             axios.post('http://localhost:3001/admin/signin', {
                 name: name,
                 password:password,
                 secret:secret
-            })
+            },{withCredentials:true})
                 .then((res) => {
                     console.log(res)
                     AdminIsLoggin(name)
@@ -35,6 +38,11 @@ function Admin() {
             console.log(error)
         }
 
+    }
+    if(loading){
+        return(
+            <Loading/>
+        )
     }
     //admin login
     return (
