@@ -10,7 +10,7 @@ import { BiSolidLogOut } from "react-icons/bi";
 
 
 function AdminProfile() {
-  const { AdminID, AdminIsLogout, Account,logut } = useContext(userContext)
+  const { AdminID, AdminIsLogout, Account, logut } = useContext(userContext)
   const [details, SetDetails] = useState([])
   const [data, SetData] = useState({
     name: "",
@@ -19,7 +19,7 @@ function AdminProfile() {
   const GetAPI = `http://localhost:3001/admin/admin/${AdminID}`
   const adminUpdate = `http://localhost:3001/admin/adminupdate/${AdminID}`
   useEffect(() => {
-    axios.get(GetAPI)
+    axios.get(GetAPI, { withCredentials: true })
       .then((res) => {
         console.log(res.data.message.adminPic)
         console.log(res.data.message)
@@ -54,8 +54,18 @@ function AdminProfile() {
     }
   }
   const HandleLogout = () => {
-    AdminIsLogout()
-    logut()
+    try {
+      axios.get('http://localhost:3001/admin/logout', { withCredentials: true })
+        .then((res) => {
+          console.log(res)
+          AdminIsLogout()
+          logut()
+        })
+
+    } catch (error) {
+      console.log(error)
+    }
+
   }
   return (
     <>
