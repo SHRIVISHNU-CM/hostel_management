@@ -18,7 +18,7 @@ const adminDatabase = new Schema({
     location:{
         type:String
     },
-    country:{
+    block:{
         type:String
     },
     main: {
